@@ -32,6 +32,7 @@ To run this code, users will need the following libraries
 * scikit learn
 * matplotlib
 * dash
+* talib
 
 ## Team
 * Hemang
