@@ -1,0 +1,5 @@
+,Currency,Indicators,Model,CV_ROC,CV_Accuracy,Grid_best_score,Grid_best_params,Total_pnl
+0,ADA/AUD XLM/AUD,"ATR_ratio,BBands_high,BBands_low,CCI,MACD_ratio,SMA_agg,RSI_ratio",dec_tree,0.5070861997606183,0.5087255420412481,0.5251189846641988,"{'dec_tree__criterion': 'gini', 'dec_tree__max_depth': 4}",0.8514356352063599
+1,ADA/AUD XLM/AUD,"ATR_ratio,BBands_high,BBands_low,CCI,MACD_ratio,SMA_agg,RSI_ratio",dec_tree,0.5070861997606183,0.5087255420412481,0.5251189846641988,"{'dec_tree__criterion': 'gini', 'dec_tree__max_depth': 4}",0.8514356352063599
+2,ADA/AUD XLM/AUD,"ATR_ratio,BBands_high,BBands_low,CCI,MACD_ratio,SMA_agg,RSI_ratio",dec_tree,0.5070861997606183,0.5087255420412481,0.5251189846641988,"{'dec_tree__criterion': 'gini', 'dec_tree__max_depth': 4}",0.8514356352063599
+3,ADA/AUD XLM/AUD,"ATR_ratio,BBands_high,BBands_low,CCI,MACD_ratio,SMA_agg,RSI_ratio",dec_tree,0.5070861997606183,0.5087255420412481,0.5251189846641988,"{'dec_tree__criterion': 'gini', 'dec_tree__max_depth': 4}",0.8514356352063599
