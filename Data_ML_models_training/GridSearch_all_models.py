@@ -9,8 +9,9 @@ df_data['Target_returns'] = df_data.Returns.shift(-1)
 df_data.dropna(inplace=True)
 df_data['Buy_or_sell'] = df_data.Target_returns.apply(lambda x: 'Buy' if x > 0 else 'Dont_buy')
 
-curr_list = ['XLM/AUD']         # 'ETH/AUD', 'XRP/AUD', 'LTC/AUD', 'ADA/AUD', 'XLM/AUD', 'BCH/AUD'
-indicators_list = ['BBands_high', 'BBands_low', 'RSI_ratio', 'CCI','ADX', 'ADX_dirn'] #, 'MACD_ratio', 'ATR_ratio', 'SMA_agg', 
+curr_list = [ 'ETH/AUD', 'XRP/AUD', 'LTC/AUD', 'ADA/AUD', 'XLM/AUD', 'BCH/AUD' ]         # 'ETH/AUD', 'XRP/AUD', 'LTC/AUD', 'ADA/AUD', 'XLM/AUD', 'BCH/AUD'
+test_currs = ['ETH/AUD', 'XRP/AUD', 'LTC/AUD', 'ADA/AUD', 'XLM/AUD', 'BCH/AUD']
+indicators_list = ['BBands_high', 'BBands_low', 'RSI_ratio', 'CCI','ADX', 'ADX_dirn', 'SMA_vol_agg', 'MACD_ratio']
 # model_for_testing = 'grad_boost'
 all_models = [ 'svc', 'dec_tree', 'forest', 'grad_boost', 'ada_boost' ]        #,'svc', 'dec_tree', 'forest', 'grad_boost', 'ada_boost'
 
@@ -114,7 +115,7 @@ for model_for_testing in all_models:
 
     elif model_for_testing == 'ada_boost': 
         params['ada_boost__n_estimators'] = list(range(100,200,10))
-        params['ada_boost__learning_rate'] = [0.075, 0.1, 0.25, 0.5]
+        params['ada_boost__learning_rate'] = [0.05, 0.075, 0.1]
         params['ada_boost__algorithm'] = ['SAMME.R']
 
     grid = GridSearchCV(pipe, params, cv=10, scoring='roc_auc', n_jobs=20)
@@ -139,7 +140,7 @@ for model_for_testing in all_models:
     df_testing_data.dropna(inplace=True)
     df_testing_data['Buy_or_sell'] = df_testing_data.Target_returns.apply(lambda x: 'Buy' if x > 0 else 'Dont_buy')
 
-    df_testing_subset = df_testing_data.loc[ df_testing_data.Currency.isin(curr_list) ] 
+    df_testing_subset = df_testing_data.loc[ df_testing_data.Currency.isin(test_currs) ] 
     X_test = df_testing_subset.loc[: , indicators_list].reset_index(drop=True)   
     y_test = df_testing_subset.loc[:, ['Target_returns', 'Buy_or_sell']].copy()
 
@@ -168,7 +169,6 @@ for model_for_testing in all_models:
     # df_outcomes = pd.DataFrame(columns=['Num_recs', 'currency', 'Indicators', 'Model_tested', 'CV_ROC', 'CV_Accuracy', 'Grid_best_score', 'grid_best_params', 'Test_accuracy', 'Total_pnl'], index = None)
 
     df_outcomes = df_outcomes.append(pd.Series([ 
-        num_of_training_recs, 
         currency,
         indicators,
         model_tested,
