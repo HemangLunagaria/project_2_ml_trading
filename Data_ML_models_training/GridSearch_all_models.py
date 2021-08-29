@@ -11,9 +11,9 @@ df_data['Buy_or_sell'] = df_data.Target_returns.apply(lambda x: 'Buy' if x > 0 e
 
 curr_list = [ 'ETH/AUD', 'XRP/AUD', 'LTC/AUD', 'ADA/AUD', 'XLM/AUD', 'BCH/AUD' ]         # 'ETH/AUD', 'XRP/AUD', 'LTC/AUD', 'ADA/AUD', 'XLM/AUD', 'BCH/AUD'
 test_currs = ['ETH/AUD', 'XRP/AUD', 'LTC/AUD', 'ADA/AUD', 'XLM/AUD', 'BCH/AUD']
-indicators_list = ['BBands_high', 'BBands_low', 'RSI_ratio', 'CCI','ADX', 'ADX_dirn'] #, 'MACD_ratio', 'ATR_ratio', 'SMA_agg', 
+indicators_list = ['BBands_high', 'BBands_low', 'RSI_ratio', 'CCI','ADX', 'ADX_dirn', 'SMA_vol_agg', 'MACD_ratio']
 # model_for_testing = 'grad_boost'
-all_models = [ 'svc', 'dec_tree', 'forest' , 'ada_boost' ]        #,'svc', 'dec_tree', 'forest', 'grad_boost', 'ada_boost'
+all_models = [ 'svc', 'dec_tree', 'forest', 'grad_boost', 'ada_boost' ]        #,'svc', 'dec_tree', 'forest', 'grad_boost', 'ada_boost'
 
 
 
