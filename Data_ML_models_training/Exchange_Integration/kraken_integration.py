@@ -85,6 +85,30 @@ def getOHLC(pair, since):
     result = executeGetRequest(url,'result', {}, postdata)
     return result
 
+# Sample resposne: {'ADAAUD': {'a': ['3.840700', '2916', '2916.000'], 'b': ['3.801550', '2942', '2942.000'], 'c': ['3.841090', '8.29470281'], 'v': ['6392.70596342', '23560.39983444'], 'p': ['3.819036', '3.824366'], 't': [44, 116], 'l': ['3.743660', '3.743660'], 'h': ['3.871730', '3.929740'], 'o': '3.770460'}}
+# 'a'  stands for ask and 'b' stands for bid
+# Reference : https://docs.kraken.com/rest/#operation/getTickerInformation
+def getTickerInformation(pair):
+    url = endpoint + '/0/public/Ticker'
+    postdata = {}
+    postdata['pair'] = pair.upper()
+    result = executeGetRequest(url,'result', {}, postdata)
+    return result
+
+# Get ask price == sell
+def getAskPrice(pair):
+    data = getTickerInformation(pair)
+    price_data = data[pair]
+    ask_price = price_data['a'][0]
+    return float(ask_price)
+
+# Get bid price == buy
+def getBidPrice(pair):
+    data = getTickerInformation(pair)
+    price_data = data[pair]
+    bid_price = price_data['b'][0]
+    return float(bid_price)
+
 def getOHLC_CCXT(pair, since):
     exchange = ccxt.kraken({
         'apiKey': kraken_public_key,
@@ -112,6 +136,11 @@ def getMyBalance():
     result = executePostRequest(url, headers, postdata, 'result')
     return result
 
+def getCashBalance():
+    result = getMyBalance()
+    return float(result['ZAUD'])
+
+
 # Function to place order on Kraken
 # ordertype: Values can be one of the following("market" "limit" "stop-loss" "take-profit" "stop-loss-limit" "take-profit-limit" "settle-position")
 # type : Values can be one of the following("buy" "sell")
@@ -132,3 +161,4 @@ def placeOrder(ordertype, type, pair, price, volume=0):
     url = endpoint + urlpath
     result = executePostRequest(url, headers, postdata, 'result')
     return result
+    

@@ -28,7 +28,7 @@ aws_secret_key = os.getenv("AWS_TRADINATOR_SECRET")
 
 s3_bucket = 'tradinator'
 
-currs_list = ['ETH/AUD', 'XRP/AUD' , 'LTC/AUD', 'ADA/AUD', 'XLM/AUD', 'BCH/AUD']     #
+currs_list = ['ETH/AUD', 'XRP/AUD' , 'LTC/AUD', 'ADA/AUD', 'XLM/AUD', 'BCH/AUD', 'BTC/AUD']     #
 indicators_list = ['BBands_high', 'BBands_low', 'RSI_ratio', 'CCI','ADX', 'ADX_dirn', 'SMA_vol_agg', 'MACD_ratio']
 since = 1629936000000 #EPOCH time in milliseconds for date 26/08/2020 00:00:00 GMT. This is a reference point.
 tasks = []
