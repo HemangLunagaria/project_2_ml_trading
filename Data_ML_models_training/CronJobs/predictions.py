@@ -6,6 +6,7 @@ import time
 import boto3
 from botocore.exceptions import ClientError
 import os
+import sys
 import asyncio
 import pandas as pd
 
@@ -13,9 +14,11 @@ from datetime import datetime
 from sklearn.pipeline import make_pipeline, Pipeline
 from joblib import load
 from dotenv import load_dotenv
+
 # Run this to for following imports to work when executing via termimal
 # export PYTHONPATH="${PYTHONPATH}:/Users/hemanglunagaria/Documents/Monash_FinTech_repos/project_2_ml_trading/"
-
+sys.path.append("../Exchange_Integration/")
+sys.path.append("../Utility_Functions/")
 from Exchange_Integration import kraken_integration as kr
 from Utility_Functions import Functions
 
@@ -29,7 +32,7 @@ aws_secret_key = os.getenv("AWS_TRADINATOR_SECRET")
 s3_bucket = 'tradinator'
 
 currs_list = ['ETH/AUD', 'XRP/AUD' , 'LTC/AUD', 'ADA/AUD', 'XLM/AUD', 'BCH/AUD', 'BTC/AUD']     #
-indicators_list = ['BBands_high', 'BBands_low', 'RSI_ratio', 'CCI','ADX', 'ADX_dirn', 'SMA_vol_agg', 'MACD_ratio']
+indicators_list = ['SMA_agg', 'RSI_ratio', 'CCI', 'MACD_ratio', 'ADX', 'ADX_dirn', 'ATR_ratio', 'BBands_high', 'BBands_low', 'SMA_vol_agg', 'Returns']
 since = 1629936000000 #EPOCH time in milliseconds for date 26/08/2020 00:00:00 GMT. This is a reference point.
 tasks = []
 
@@ -117,21 +120,25 @@ def getData_sync():
         # ohlc_data_dict[curr] = df
     return ohlc_data_dict
 
-def predictions():
+def predictions(file=None):
     print("-------------Starting job:" + datetime.now().strftime("%d/%m/%Y %H:%M:%S") + '-------------')
-    joblib_files = getJobLibFile()
-    file = load('Resources/' + joblib_files[0])
-    results = predictions_async(file)
-    print(results)
-    createNotification()
+    results = ""
+    if file is not None:
+        results = predictions_async(file)
+        print(results)
+        createNotification()
+    else:
+        print("Provide a joblib file to continue")
     print("-------------Ending job:" + datetime.now().strftime("%d/%m/%Y %H:%M:%S") + '-------------')
     return results
     
 def printcwd():
     print(os.getcwd())
 
-
-schedule.every().hour.at("01:00").do(predictions)
+joblib_files = getJobLibFile()
+joblib_file = load('Resources/' + joblib_files[0])
+schedule.every().hour.at("01:00").do(predictions, file=joblib_file)
+# schedule.every(2).minutes.do(predictions, file=joblib_file)
 
 while True:
     schedule.run_pending()

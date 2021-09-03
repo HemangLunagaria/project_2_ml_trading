@@ -35,8 +35,8 @@ def getPredictedSignals():
         # dt = dt.astimezone(to_zone)
         # results.append([dt, rows[total_rows-1][1], rows[total_rows-1][2]])
         if rows[total_rows-1][2] == '1':
-            results = results + '\n' + rows[total_rows-1][1] + ": Buy,"
-        elif rows[total_rows-1][2] == '-1':
-            results = results + '\n' + rows[total_rows-1][1] + ": Don't Buy,"
+            results = results + '\n' + rows[total_rows-1][1] + ": Buy or Hold,"
+        elif rows[total_rows-1][2] == '0':
+            results = results + '\n' + rows[total_rows-1][1] + ": Don't Buy or Sell,"
     # print(dt, rows[total_rows-1][1], rows[total_rows-1][2])
     return results
