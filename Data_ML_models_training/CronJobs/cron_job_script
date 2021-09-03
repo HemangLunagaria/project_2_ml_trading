@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# run predictions.py
+
+dir=/Users/hemanglunagaria/Documents/Monash_FinTech_repos/project_2_ml_trading/Data_ML_models_training/CronJobs
+python=/Library/Frameworks/Python.framework/Versions/3.9/bin/python3
+notifier=/usr/local/bin/terminal-notifier
+now=$(date)
+
+cd $dir
+$python predictions.py
+$notifier -title "Tradinator cron job" -message "Completed the job at $now"
+echo "Cron job update completed at $now"
+
