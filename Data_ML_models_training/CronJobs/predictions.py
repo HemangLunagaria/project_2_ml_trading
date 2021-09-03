@@ -1,15 +1,16 @@
 # This is a cron job that will run every 60th minute to get the OHLC data for that hour and generate buy/sell signals for the coins, save the signals as CSV and upload it to S3 bucket.
 
-import pync
-import schedule
-import time
-import boto3
-from botocore.exceptions import ClientError
 import os
 import sys
 import asyncio
 import pandas as pd
+import schedule
+import time
+import boto3
+if sys.platform.startswith('darwin'):
+    import pync
 
+from botocore.exceptions import ClientError
 from datetime import datetime
 from sklearn.pipeline import make_pipeline, Pipeline
 from joblib import load
@@ -45,7 +46,8 @@ s3_client = boto3.client(
 
 def createNotification():
     title = 'Tradinator Cron Job'
-    pync.notify(datetime.now().strftime("%d/%m/%Y %H:%M:%S") + ":Predictions generated and uploaded to S3", title=title, group=os.getpid())
+    if sys.platform.startswith('darwin'):
+        pync.notify(datetime.now().strftime("%d/%m/%Y %H:%M:%S") + ":Predictions generated and uploaded to S3", title=title, group=os.getpid())
 
 def getJobLibFile():
     s3_folder = 'joblib' 
