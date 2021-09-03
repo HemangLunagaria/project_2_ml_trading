@@ -27,7 +27,7 @@ def add_tech_indicators(df, fast, slow):
     # -1 > ratio > 0, when the MACD is above Signal line but below 0
     # 0 < ratio < 1, when MACD is below signal but above 0 
     # 1 < ratio, when MACD is above 0 and above the signal line 
-    df['MACD'], df['Signal'], hist = ta.MACD(df['Close'], fastperiod=6, slowperiod=12, signalperiod=5) 
+    df['MACD'], df['Signal'], hist = ta.MACD(df['Close'], fastperiod=fast, slowperiod=slow, signalperiod=8) 
     df['MACD_ratio'] =  df['MACD'] / df['Signal']
     df['MACD_ratio'] = df['MACD_ratio'] * df['MACD'] / abs(df['MACD'])          
 
