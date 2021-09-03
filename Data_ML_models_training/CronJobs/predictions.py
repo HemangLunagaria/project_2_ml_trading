@@ -18,8 +18,6 @@ from dotenv import load_dotenv
 
 # Run this to for following imports to work when executing via termimal
 # export PYTHONPATH="${PYTHONPATH}:/Users/hemanglunagaria/Documents/Monash_FinTech_repos/project_2_ml_trading/"
-sys.path.append("../Exchange_Integration/")
-sys.path.append("../Utility_Functions/")
 from Exchange_Integration import kraken_integration as kr
 from Utility_Functions import Functions
 
@@ -34,7 +32,7 @@ s3_bucket = 'tradinator'
 
 currs_list = ['ETH/AUD', 'XRP/AUD' , 'LTC/AUD', 'ADA/AUD', 'XLM/AUD', 'BCH/AUD', 'BTC/AUD']     #
 indicators_list = ['SMA_agg', 'RSI_ratio', 'CCI', 'MACD_ratio', 'ADX', 'ADX_dirn', 'ATR_ratio', 'BBands_high', 'BBands_low', 'SMA_vol_agg', 'Returns']
-since = 1629936000000 #EPOCH time in milliseconds for date 26/08/2020 00:00:00 GMT. This is a reference point.
+since = 1630540800000 #EPOCH time in milliseconds for date 02/09/2021 00:00:00 GMT. This is a reference point.
 tasks = []
 
 s3_client = boto3.client(
