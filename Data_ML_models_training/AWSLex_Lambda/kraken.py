@@ -5,18 +5,18 @@ import hashlib
 import hmac
 import base64
 import requests
-import ccxt
-import pandas as pd
+# import ccxt
+# import pandas as pd
 
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 import time
 
 # Load environment variables
-load_dotenv()
+# load_dotenv()
 
 # Import environment variables
-kraken_public_key = os.getenv("KRAKEN_PUBLIC_KEY")
-kraken_secret_key = os.getenv("KRAKEN_SECRET_KEY")
+kraken_public_key = os.environ["KRAKEN_PUBLIC_KEY"]
+kraken_secret_key = os.environ["KRAKEN_SECRET_KEY"]
 
 endpoint = "https://api.kraken.com"
 
@@ -72,19 +72,7 @@ def executeGetRequest(url, key, headers=None, params=None):
         return "error:" + str(ex)
     except Exception as ex:
         return "error:" + str(ex)
-
-# Function to fetch OHLC data from Kraken API
-# pair : Pair to get OHLC data for eg: ADAAUD
-# since : EPOCH value
-def getOHLC(pair, since):
-    url = endpoint + '/0/public/OHLC'
-    postdata = {}
-    postdata['pair'] = pair.upper()
-    postdata['interval'] = 60
-    postdata['since'] = str(since)
-    result = executeGetRequest(url,'result', {}, postdata)
-    return result
-
+        
 # Sample resposne: {'ADAAUD': {'a': ['3.840700', '2916', '2916.000'], 'b': ['3.801550', '2942', '2942.000'], 'c': ['3.841090', '8.29470281'], 'v': ['6392.70596342', '23560.39983444'], 'p': ['3.819036', '3.824366'], 't': [44, 116], 'l': ['3.743660', '3.743660'], 'h': ['3.871730', '3.929740'], 'o': '3.770460'}}
 # 'a'  stands for ask and 'b' stands for bid
 # Reference : https://docs.kraken.com/rest/#operation/getTickerInformation
@@ -108,22 +96,35 @@ def getBidPrice(pair):
     price_data = data[pair]
     bid_price = price_data['b'][0]
     return float(bid_price)
+    
 
-def getOHLC_CCXT(pair, since):
-    exchange = ccxt.kraken({
-        'apiKey': kraken_public_key,
-        'secret': kraken_secret_key,
-    })
+# Function to fetch OHLC data from Kraken API
+# pair : Pair to get OHLC data for eg: ADAAUD
+# since : EPOCH value
+def getOHLC(pair, since):
+    url = endpoint + '/0/public/OHLC'
+    postdata = {}
+    postdata['pair'] = pair.upper()
+    postdata['interval'] = 60
+    postdata['since'] = str(since)
+    result = executeGetRequest(url,'result', {}, postdata)
+    return result
 
-     # Call data fetch
-    ohlcv = exchange.fetchOHLCV(pair.upper(), '1h', since=since)
+# def getOHLC_CCXT(pair, since):
+#     exchange = ccxt.kraken({
+#         'apiKey': kraken_public_key,
+#         'secret': kraken_secret_key,
+#     })
 
-    # Store the values in a dataframe
-    df_ohlcv = pd.DataFrame(ohlcv, columns=['Date', 'Open', 'High', 'Low', 'Close', 'Volume']).set_index('Date')
-    df_ohlcv.index = pd.to_datetime(df_ohlcv.index, unit='ms')
+#      # Call data fetch
+#     ohlcv = exchange.fetchOHLCV(pair.upper(), '1h', since=since)
 
-    df_ohlcv.dropna(inplace=True)
-    return df_ohlcv
+#     # Store the values in a dataframe
+#     df_ohlcv = pd.DataFrame(ohlcv, columns=['Date', 'Open', 'High', 'Low', 'Close', 'Volume']).set_index('Date')
+#     df_ohlcv.index = pd.to_datetime(df_ohlcv.index, unit='ms')
+
+#     df_ohlcv.dropna(inplace=True)
+#     return df_ohlcv
 
 # Function to fetch the user balance from Kraken
 def getMyBalance():
@@ -135,11 +136,12 @@ def getMyBalance():
     url = endpoint + urlpath
     result = executePostRequest(url, headers, postdata, 'result')
     return result
-
+    
 def getCashBalance():
     result = getMyBalance()
-    return float(result['ZAUD'])
-
+    if 'ZAUD' in result.keys():
+        return float(result['ZAUD'])
+    return float(0)
 
 # Function to place order on Kraken
 # ordertype: Values can be one of the following("market" "limit" "stop-loss" "take-profit" "stop-loss-limit" "take-profit-limit" "settle-position")
@@ -161,4 +163,3 @@ def placeOrder(ordertype, type, pair, price, volume=0):
     url = endpoint + urlpath
     result = executePostRequest(url, headers, postdata, 'result')
     return result
-    
