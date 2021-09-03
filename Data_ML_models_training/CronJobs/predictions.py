@@ -87,6 +87,30 @@ def calculateIndicators(curr, data):
 
     return df_data
 
+def getBalance(coin):
+    result = kr.getMyBalance()
+    balance = ""
+    for key, data in result.items():
+        balance = balance + "[" + key + ":" + data + "], "
+    return balance
+
+def placeSellOrder(pair, volume):
+    kr.placeOrder("market", "sell", pair, volume=volume)
+
+def placeBuyOrder(pair, volume):
+    kr.placeOrder("market", "buy", pair, volume=volume)
+
+def executeTrade(pair, signal):
+    # TODO : Change pair format to remove / eg. ETH/AUD -> ETHAUD
+    # TODO : To check balance for a coin, different format is required. Eg AUD -> ZAUD, BTC -> XXBT
+    # TODO : Figure out volume to buy/sell
+    # TODO : Check if enough cash balance available to buy the given volume of the coin
+    volume = 0
+    if signal == 1: #BUY or HOLD
+        placeBuyOrder(pair, volume)
+    elif signal == 0: #DONT BUY or SELL
+        placeSellOrder(pair, volume)
+
 async def getPredictionsPerCoin(curr, since, pipeline):
     csv_filename = curr.replace('/','-') + '_predictions.csv'
     csv_path = 'Resources/' + csv_filename
