@@ -1,6 +1,5 @@
 # This is a cron job that will run every 60th minute to get the OHLC data for that hour and generate buy/sell signals for the coins, save the signals as CSV and upload it to S3 bucket.
 
-from Data_ML_models_training.CronJobs.Exchange_Integration.kraken_integration import getBidPrice
 import os
 import sys
 import asyncio
@@ -35,7 +34,7 @@ s3_bucket = 'tradinator'
 currs_list = ['ETH/AUD', 'XRP/AUD' , 'LTC/AUD', 'ADA/AUD', 'XLM/AUD', 'BCH/AUD', 'BTC/AUD']     #
 indicators_list = ['SMA_agg', 'RSI_ratio', 'CCI', 'MACD_ratio', 'ADX', 'ADX_dirn', 'ATR_ratio', 'BBands_high', 'BBands_low', 'SMA_vol_agg', 'Returns']
 since = 1630540800000 #EPOCH time in milliseconds for date 02/09/2021 00:00:00 GMT. This is a reference point.
-tasks = []
+# tasks = []
 with open("./Resources/autotrading_config.json") as jsonFile:
     trading_config = json.load(jsonFile)
     jsonFile.close()
@@ -162,13 +161,14 @@ async def getPredictionsPerCoin(curr, since, pipeline):
     X_data = df_tech_indicators.loc[:, indicators_list].reset_index(drop=True)
     y_data = df_tech_indicators.loc[:, ['Currency']].copy()
     y_data['Predictions'] = pipeline.predict(X_data)
-    print(y_data.iloc[-1])
-    # await executeTrade(curr,y_data['Predictions'][-1])
+    # print(y_data.iloc[-1])
+    await executeTrade(curr,y_data['Predictions'][-1])
     y_data.to_csv(csv_path)
     result = uploadFileToS3(csv_path, 'predictions/' + csv_filename)
     return curr + " predictons generated and uploaded." if result else curr + " predictons generated but not uploaded."
 
 async def getPredictions_async(joblib):
+    tasks = []
     for curr in currs_list:
         task = asyncio.create_task(getPredictionsPerCoin(curr, since, joblib))
         tasks.append(task)
@@ -207,8 +207,8 @@ def printcwd():
 
 joblib_files = getJobLibFile()
 joblib_file = load('Resources/' + joblib_files[0])
-# schedule.every().hour.at("01:00").do(predictions, file=joblib_file)
-schedule.every(2).minutes.do(predictions, file=joblib_file)
+schedule.every().hour.at("01:00").do(predictions, file=joblib_file)
+# schedule.every(2).minutes.do(predictions, file=joblib_file)
 
 while True:
     schedule.run_pending()
