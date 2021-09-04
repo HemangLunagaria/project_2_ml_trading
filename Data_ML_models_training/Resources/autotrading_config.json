@@ -1,0 +1,45 @@
+{
+    "fiat": "ZAUD",
+    "ETH/AUD":{
+        "pair": "ETHAUD",
+        "bal_id": "XETH",
+        "amount": 30.0,
+        "min_vol": 0.004
+    },
+    "BTC/AUD":{
+        "pair": "XBTAUD",
+        "bal_id": "XXBT",
+        "amount": 10.0,
+        "min_vol": 0.0001
+    },
+    "LTC/AUD":{
+        "pair": "LTCAUD",
+        "bal_id": "XLTC",
+        "amount": 10.0,
+        "min_vol": 0.03
+    },
+    "XRP/AUD":{
+        "pair": "XRPAUD",
+        "bal_id": "XXRP",
+        "amount": 10.0,
+        "min_vol": 5.0
+    },
+    "XLM/AUD":{
+        "pair": "XXLMZAUD",
+        "bal_id": "XXLM",
+        "amount": 10.0,
+        "min_vol": 10.0
+    },
+    "ADA/AUD":{
+        "pair": "ADAAUD",
+        "bal_id": "ADA",
+        "amount": 10.0,
+        "min_vol": 5.0
+    },
+    "BCH/AUD":{
+        "pair": "BCHAUD",
+        "bal_id": "BCH",
+        "amount": 10.0,
+        "min_vol": 0.01
+    }
+}
