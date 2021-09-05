@@ -138,7 +138,9 @@ def getMyBalance():
 
 def getCashBalance():
     result = getMyBalance()
-    return float(result['ZAUD'])
+    if 'ZAUD' in result.keys():
+        return float(result['ZAUD'])
+    return float(0)
 
 
 # Function to place order on Kraken
@@ -147,7 +149,7 @@ def getCashBalance():
 # pair : Coin to buy eg ADAAUD
 # price: Limit price for limit orders or Trigger price for stop-loss, stop-loss-limit, take-profit and take-profit-limit orders
 # volume : Order quantity
-def placeOrder(ordertype, type, pair, price, volume=0):
+def placeOrder(ordertype, type, pair, price=0, volume=0):
     nonce = int(1000*time.time())
     postdata = {}
     postdata['nonce'] = str(nonce)

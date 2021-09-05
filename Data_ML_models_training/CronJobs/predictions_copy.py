@@ -7,7 +7,6 @@ import pandas as pd
 import schedule
 import time
 import boto3
-import json
 if sys.platform.startswith('darwin'):
     import pync
 
@@ -34,10 +33,7 @@ s3_bucket = 'tradinator'
 currs_list = ['ETH/AUD', 'XRP/AUD' , 'LTC/AUD', 'ADA/AUD', 'XLM/AUD', 'BCH/AUD', 'BTC/AUD']     #
 indicators_list = ['SMA_agg', 'RSI_ratio', 'CCI', 'MACD_ratio', 'ADX', 'ADX_dirn', 'ATR_ratio', 'BBands_high', 'BBands_low', 'SMA_vol_agg', 'Returns']
 since = 1630540800000 #EPOCH time in milliseconds for date 02/09/2021 00:00:00 GMT. This is a reference point.
-# tasks = []
-with open("./Resources/autotrading_config.json") as jsonFile:
-    trading_config = json.load(jsonFile)
-    jsonFile.close()
+tasks = []
 
 s3_client = boto3.client(
     's3',
@@ -91,67 +87,71 @@ def calculateIndicators(curr, data):
 
     return df_data
 
-def calculateVolumeToBuy(amount, pair):
-    bid = kr.getBidPrice(pair)
-    return float(amount/bid)
+def get_coin_codes(coin):
 
-def calculateVolumeToSell(bal_id, total_balance):
-    if bal_id in total_balance.keys():
-        # print(float(result[coin]))
-        return float(total_balance[bal_id])
-    return float(0)
+    # TODO: This is required because the balance api in kraken returns the balances in a different code format 
+    if coin == 'BTC': code = 'XXBT'
+    elif coin == 'ETH': code = 'ETH'
+    elif coin == 'XLM': code = 'XXLM'
+    elif coin == 'XRP': code = 'XRP'
+    elif coin == 'ADA': code = 'ADA'
+    elif coin == 'BCH': code = 'BCH'
+    elif coin == 'LTC': code = 'LTC'
 
-def isBuySignalExecutable(volume, amount, min_vol, bal_id, total_balance):
-    try:
-        if 'ZAUD' in total_balance.keys() and (bal_id not in total_balance.keys() or (bal_id in total_balance.keys() and float(total_balance[bal_id]) == float(0))):
-            if float(total_balance['ZAUD']) >= amount and volume >= min_vol :
-                return True
-    except Exception as ex:
-        print(ex)
-        return False
-    return False
+    return code 
 
-def isSellSignalExecutable(volume):
-    if volume > 0:
-        return True
-    return False
+def get_amount_per_position():
+
+    amount = 50
+    # TODO: Read the parameter set in csv / JSON
+    return amount 
+
+def getBalance(coin):
+    result = kr.getMyBalance()
+    balance = ""
+    for key, data in result.items():
+        balance = balance + "[" + key + ":" + data + "], "
+    return balance
 
 def placeSellOrder(pair, volume):
-    result = kr.placeOrder("market", "sell", pair, volume=volume)
-    print(pair + ":" + str(result))
+    kr.placeOrder("market", "sell", pair, volume=volume)
 
 def placeBuyOrder(pair, volume):
-    result = kr.placeOrder("market", "buy", pair, volume=volume)
-    print(pair + ":" + str(result))
+    kr.placeOrder("market", "buy", pair, volume=volume)
 
-# TODO : Change pair format to remove / eg. ETH/AUD -> ETHAUD
-# TODO : To check balance for a coin, different format is required. Eg AUD -> ZAUD, BTC -> XXBT
-# TODO : Figure out volume to buy/sell
-# TODO : Check if enough cash balance available to buy the given volume of the coin
-async def executeTrade(curr, signal):
-    try:
-        volume = 0
-        amount = float(trading_config[curr]['amount'])
-        min_vol =  float(trading_config[curr]['min_vol'])
-        bal_id = trading_config[curr]['bal_id']
-        pair = trading_config[curr]['pair']
-        total_balance = kr.getMyBalance()
-        print(curr + " : " + str(signal))
-        if signal == 1: #BUY or HOLD
-            volume = calculateVolumeToBuy(amount, pair)
-            print(volume, amount, min_vol, bal_id, total_balance)
-            if isBuySignalExecutable(volume, amount, min_vol, bal_id, total_balance):
-                placeBuyOrder(pair, volume)
-            else:
-                print(curr + ": BUY NOT POSSIBLE" )
-        elif signal == 0: #DONT BUY or SELL
-            volume = calculateVolumeToSell(bal_id, total_balance)
-            if isSellSignalExecutable(volume):
-                placeSellOrder(pair, volume)
-            else:
-                print(curr + ": SELL NOT POSSIBLE" )
-    except Exception as ex:
-        print(ex)
+def executeTrade(pair, signal):
+    # TODO : Change pair format to remove / eg. ETH/AUD -> ETHAUD
+    # TODO : To check balance for a coin, different format is required. Eg AUD -> ZAUD, BTC -> XXBT
+    # TODO : Figure out volume to buy/sell
+    # TODO : Check if enough cash balance available to buy the given volume of the coin
+
+    # Sid - We can get the whole account balance here. the Endpoint can be called once and the relevant balance can be passed further 
+    balance = kr.getMyBalance()
+
+    # Read the balances fetched earlier in this function  
+    coin, aud = pair.split('/')
+
+    coin_vol = aud_bal = 0
+
+    if get_coin_codes(coin) in balance.keys(): coin_vol = float(balance[coin])
+    if 'ZAUD' in balance.keys(): aud_bal = float(balance['ZAUD'])
+        
+    volume = 0
+    if signal == 1 and coin_vol == 0: #If we havent bought the coin yet and signal is 1, then BUY
+
+        # further check before buying - if the current balance is greater than or equal to the amount configured by the user 
+        amt_per_trade = get_amount_per_position()
+        if amt_per_trade <= aud_bal:
+            price = kr.getBidPrice(pair)
+            volume = amt_per_trade / price
+            pair = pair.replace('/', '')
+
+            placeBuyOrder(pair, volume)
+
+    elif signal == 0 and coin_vol > 1: #If we have the coin and the signal = 0, then SELL
+
+        volume = coin_vol
+        placeSellOrder(pair, volume)
 
 async def getPredictionsPerCoin(curr, since, pipeline):
     csv_filename = curr.replace('/','-') + '_predictions.csv'
@@ -161,22 +161,25 @@ async def getPredictionsPerCoin(curr, since, pipeline):
     X_data = df_tech_indicators.loc[:, indicators_list].reset_index(drop=True)
     y_data = df_tech_indicators.loc[:, ['Currency']].copy()
     y_data['Predictions'] = pipeline.predict(X_data)
-    # print(y_data.iloc[-1])
-    await executeTrade(curr,y_data['Predictions'][-1])
+
+    # Sid: y_data['Predictions'][-1] can be used as the Buy/Hold/Dont buy/Sell
+    signal = y_data['Predictions'][-1]
+    executeTrade(curr, signal )
+
     y_data.to_csv(csv_path)
     result = uploadFileToS3(csv_path, 'predictions/' + csv_filename)
     return curr + " predictons generated and uploaded." if result else curr + " predictons generated but not uploaded."
 
 async def getPredictions_async(joblib):
-    tasks = []
+
     for curr in currs_list:
+
         task = asyncio.create_task(getPredictionsPerCoin(curr, since, joblib))
         tasks.append(task)
     # print(tasks)
     return await asyncio.gather(*tasks)
 
 def predictions_async(joblib):
-    results = ""
     loop = asyncio.get_event_loop()
     results = loop.run_until_complete(getPredictions_async(joblib))
     return results
@@ -192,8 +195,8 @@ def getData_sync():
 
 def predictions(file=None):
     print("-------------Starting job:" + datetime.now().strftime("%d/%m/%Y %H:%M:%S") + '-------------')
+    results = ""
     if file is not None:
-        results = ""
         results = predictions_async(file)
         print(results)
         createNotification()
