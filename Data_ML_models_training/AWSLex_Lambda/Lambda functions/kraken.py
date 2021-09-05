@@ -1,3 +1,5 @@
+# This is a copy of the CronJobs/Exchange_Integration/kraken_integration.py file which was uploaded to AWS. It has been slightly modified to make it work on AWS environment.
+# Please refer to kraken_integration.py for detailed comments of the code.
 
 import os
 import urllib.parse
@@ -5,14 +7,14 @@ import hashlib
 import hmac
 import base64
 import requests
-# import ccxt
-# import pandas as pd
+# import ccxt # ccxt library doesn't work on AWS Lambda function
+# import pandas as pd #pandas library removed as its not required
 
 # from dotenv import load_dotenv
 import time
 
 # Load environment variables
-# load_dotenv()
+# load_dotenv() #AWS lambda environment variables setup is different and there is no requirement to use this library
 
 # Import environment variables
 kraken_public_key = os.environ["KRAKEN_PUBLIC_KEY"]
@@ -110,6 +112,7 @@ def getOHLC(pair, since):
     result = executeGetRequest(url,'result', {}, postdata)
     return result
 
+# Commented this method as ccxt library is not supported by AWS Lambda.
 # def getOHLC_CCXT(pair, since):
 #     exchange = ccxt.kraken({
 #         'apiKey': kraken_public_key,

@@ -1,3 +1,6 @@
+# This is a copy of the CronJobs/Exchange_Integration/coinspot_integration.py file which was uploaded to AWS.
+# Please refer to coinspot_integration.py for detailed comments of the code.
+
 import os
 import hmac
 import hashlib

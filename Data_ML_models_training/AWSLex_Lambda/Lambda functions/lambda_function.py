@@ -1,9 +1,12 @@
+# Lambda function hooked up with Lex bot. It validates the data, fetches the recommendations and executes the trade (BUY orders only) using Kraken exchange.
+
 ### Required Libraries ###
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 import recommendations
 import kraken
 
+# Gets current balance available in Kraken account. This includes all the coins that have been traded as well as fiat currency balances
 def getBalance():
     result = kraken.getMyBalance()
     balance = ""
@@ -11,22 +14,14 @@ def getBalance():
         balance = balance + "[" + key + ":" + data + "], "
     return balance
     
-### Function to decide the recommendation based on the risk level ###
+# Function to fetch the recommendation of the latest hour for all the supported coins
 def getRecommendation():
     
-    # crypto = crypto.lower()
-    
-    # if crypto == "BTC":
-    #     return "BTC"
-    # elif crypto == "ETH":
-    #     return "ETH"
-    # elif crypto == "ADA":
-    #     return "ADA"
-    # elif crypto == "LTC":
-    #     return "LTC"
-    # elif crypto == 'Recommend':
     return recommendations.getPredictedSignals()
 
+### 
+# Function to get the coin id required by Kraken to execute trades or get ticker information
+###
 def getCoinAbbreviation(coin):
     coin = coin.lower()
     
@@ -45,6 +40,10 @@ def getCoinAbbreviation(coin):
     elif coin == "bitcoin cash" or coin == "bch":
         return 'BCHAUD'
         
+###
+# Kraken has a minimum volume that can be traded for each. Trades for volume lower than minimum volume returns an error.
+# Refer to https://support.kraken.com/hc/en-us/articles/360001389366
+###
 def minimumCoinVolume(coin):
     coin = coin.lower()
     
@@ -63,12 +62,20 @@ def minimumCoinVolume(coin):
     elif coin == "bitcoin cash" or coin == "bch":
         return parse_float(0.01)
 
+### 
+# Function that calculates maximum number of coins user can buy with the available cash balance in the exchange account for the selected cryptocurrency
+# ###
 def calculateMaxCoinToBuy(coin):
     cash = kraken.getCashBalance()
     bid = kraken.getBidPrice(coin)
     max_coin = cash/bid
     return max_coin
-    
+
+### 
+# Function to execute the market buy order for the selected cryptocurrency given the volume
+# crypto = selected cryptocurrency
+# coins = volume to buy
+# ###    
 def executeTrade(crypto, coins):
     coinpair = getCoinAbbreviation(crypto)
     coins = parse_float(coins)
@@ -136,17 +143,6 @@ def validate_data(age, crypto,recommend, coins, intent_request):
                 "You are too old, you must travel back in time for me to help you."
                 "can you provide an age between 0 and 64 please?",
             )
-
-    # # Validate the investment amount, it should be >= 5000
-    # if investment_amount is not None:
-    #     investment_amount = parse_int(investment_amount)
-    #     if investment_amount < 5000:
-    #         return build_validation_result(
-    #             False,
-    #             "investmentAmount",
-    #             "The minimum investment amount is $5,000 USD, "
-    #             "could you please provide a greater amount?",
-    #         )
     
     #Get recommendations
     if recommend is not None and crypto is None :
@@ -169,6 +165,7 @@ def validate_data(age, crypto,recommend, coins, intent_request):
                 message,
             )
     
+    # Get max coins user can buy of the selected cryptocurrency
     if recommend is not None and crypto is not None and coins is None:
         coinpair = getCoinAbbreviation(crypto)
         max_vol = calculateMaxCoinToBuy(coinpair)
@@ -188,6 +185,7 @@ def validate_data(age, crypto,recommend, coins, intent_request):
             message,
         )
         
+    # Check the coins (volume of the crypto to buy) value provided is between min and max value
     if recommend is not None and crypto is not None and coins is not None:
         coinpair = getCoinAbbreviation(crypto)
         max_vol = calculateMaxCoinToBuy(coinpair)
@@ -308,7 +306,8 @@ def recommend_crypto(intent_request):
                 validation_result["violatedSlot"],
                 validation_result["message"],
             )
-            
+        
+        # Returns an elicitSlot dialog to request value for next slot. This is required to achieve the conditional flow.
         if validation_result["isValid"] and "message" in validation_result:
            if validation_result["message"] is not None and validation_result["violatedSlot"] is not None:
                 return elicit_slot(

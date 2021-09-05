@@ -1,3 +1,4 @@
+# Script to run Cron job on Linux based OS. This approach was abandoned in favour of using schedule python library.
 #!/usr/bin/env bash
 # run predictions.py
 

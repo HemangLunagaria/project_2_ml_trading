@@ -1,3 +1,7 @@
+### 
+# Integration with Kraken exchange using their REST API. 
+# Refer : https://docs.kraken.com/rest/
+# ###
 
 import os
 import urllib.parse
@@ -109,6 +113,7 @@ def getBidPrice(pair):
     bid_price = price_data['b'][0]
     return float(bid_price)
 
+# Using ccxt library to get OHLC candles
 def getOHLC_CCXT(pair, since):
     exchange = ccxt.kraken({
         'apiKey': kraken_public_key,
