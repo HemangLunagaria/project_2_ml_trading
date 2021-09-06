@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
 
-<title>Presentation_ML slides</title><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>rnn_presentation_slides slides</title><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 
 <!-- General and theme style sheets -->
 <link rel="stylesheet" href="https://unpkg.com/reveal.js@4.0.2/dist/reveal.css">
@@ -14099,615 +14099,96 @@ div.jp-OutputPrompt {
 <div class="slides"><section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<hr>
-<h1 id="Machine-Learning-Process">Machine Learning Process<a class="anchor-link" href="#Machine-Learning-Process">&#182;</a></h1><hr>
-<p><img src="Data_ML_models_training/Images/ML_process.png" alt="Process Diagram"></p>
+<h1 id="LSTM-RNN-Crypto-Predictor-Using-Closing-Price-&amp;-Returns">LSTM RNN Crypto Predictor Using Closing Price &amp; Returns<a class="anchor-link" href="#LSTM-RNN-Crypto-Predictor-Using-Closing-Price-&amp;-Returns">&#182;</a></h1><p>One of the Machine Learning models used in this project is the deep learning Recurrent Neural Networks or RNN to model the Cryptos closing prices and returns. Both models use a rolling window of Xt-n to predict Xt.</p>
+
+</div>
+</div></section><section>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h1 id="Steps-taken">Steps taken<a class="anchor-link" href="#Steps-taken">&#182;</a></h1>
+</div>
+</div><div class="fragment">
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="Prepare-the-data-for-training-and-testing">Prepare the data for training and testing<a class="anchor-link" href="#Prepare-the-data-for-training-and-testing">&#182;</a></h2><p>For both the models the historical data was sourced from yahoo finance and exported to a csv file.</p>
+<p>We used the window_data function to generate the X and y values for the model, this function accepts the column number for the features (X) and the target (y). It chunks the data up with a rolling window of Xt-n to predict Xt and returns a numpy array of X and y.</p>
+<p>The features and test data sets were then split in a 70%-30% ratio for training and testing and to remove bias the split values were then scaled using a MinMaxScaler scaler.</p>
+<p>After trying out multiple combinations we used a rolling 24-hour window to predict the 25th hour or the next day opening price/returns, because that gave the least loss value.</p>
+<p>Finally, the X_train and X_test values were reshaped to fit the model's requirement of samples.</p>
+
+</div>
+</div></div></section><section>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="Build-and-train-custom-LSTM-RNNs">Build and train custom LSTM RNNs<a class="anchor-link" href="#Build-and-train-custom-LSTM-RNNs">&#182;</a></h2><p>The LSTM RNNs were built for the Closing Prices model using the same configuration.</p>
+
+</div>
+</div><div class="fragment">
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="LSTM-for-Closing-prices-model">LSTM for Closing prices model<a class="anchor-link" href="#LSTM-for-Closing-prices-model">&#182;</a></h2><p><img src="Data_ML_models_training/Images/LSTM_closing_prices_model.png" alt="LSTM Closing prices model"></p>
+
+</div>
+</div></div></section><section>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="Build-and-train-custom-LSTM-RNNs">Build and train custom LSTM RNNs<a class="anchor-link" href="#Build-and-train-custom-LSTM-RNNs">&#182;</a></h2><p>The LSTM RNNs were built for the Returns model using the same configuration.</p>
+
+</div>
+</div><div class="fragment">
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="LSTM-for-Returns-model">LSTM for Returns model<a class="anchor-link" href="#LSTM-for-Returns-model">&#182;</a></h2><p><img src="Data_ML_models_training/Images/LSTM_returns_model.png" alt="LSTM returns model"></p>
+
+</div>
+</div></div></section></section><section><section>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="Prepare-the-data-for-training-and-testing">Prepare the data for training and testing<a class="anchor-link" href="#Prepare-the-data-for-training-and-testing">&#182;</a></h2><p>For both the models the historical data was sourced from yahoo finance and exported to a csv file.</p>
+<p>We used the window_data function to generate the X and y values for the model, this function accepts the column number for the features (X) and the target (y). It chunks the data up with a rolling window of Xt-n to predict Xt and returns a numpy array of X and y.</p>
+<p>The features and test data sets were then split in a 70%-30% ratio for training and testing and to remove bias the split values were then scaled using a MinMaxScaler scaler.</p>
+<p>After trying out multiple combinations we used a rolling 24-hour window to predict the 25th hour or the next day opening price/returns, because that gave the least loss value.</p>
+<p>Finally, the X_train and X_test values were reshaped to fit the model's requirement of samples.</p>
 
 </div>
 </div></section></section><section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="Step-1---Get-Data">Step 1 - Get Data<a class="anchor-link" href="#Step-1---Get-Data">&#182;</a></h1>
-</div>
-</div></section><section>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="Training-Data-from-yfinance.">Training Data from yfinance.<a class="anchor-link" href="#Training-Data-from-yfinance.">&#182;</a></h3><p><a href="Data_ML_models_training/yfinance_data_for_training.ipynb">Jupyter Notebook</a></p>
-
-</div>
-</div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[5]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">currs_list</span> <span class="o">=</span> <span class="p">[</span> <span class="s1">&#39;BTC-AUD&#39;</span><span class="p">,</span> <span class="s1">&#39;ETH-AUD&#39;</span><span class="p">,</span> <span class="s1">&#39;XRP-AUD&#39;</span> <span class="p">,</span> <span class="s1">&#39;LTC-AUD&#39;</span><span class="p">,</span> <span class="s1">&#39;ADA-AUD&#39;</span><span class="p">,</span> <span class="s1">&#39;XLM-AUD&#39;</span><span class="p">,</span> <span class="s1">&#39;BCH-AUD&#39;</span><span class="p">]</span>
-<span class="n">start_date</span> <span class="o">=</span> <span class="s1">&#39;2019-06-01&#39;</span>
-<span class="n">end_date</span> <span class="o">=</span> <span class="s1">&#39;2021-09-01&#39;</span>
-<span class="n">interval</span> <span class="o">=</span> <span class="s1">&#39;1h&#39;</span>
-
-<span class="n">df_data</span> <span class="o">=</span> <span class="n">yf</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="n">currs_list</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span> <span class="n">start_date</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span> <span class="n">end_date</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span> <span class="n">interval</span><span class="p">,</span> <span class="n">group_by</span><span class="o">=</span> <span class="s1">&#39;ticker&#39;</span><span class="p">)</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>[*********************100%***********************]  7 of 7 completed
-</pre>
-</div>
-</div>
-
-</div>
-
-</div>
-
-</div></div></section><section>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="Testing-Data-using-CCXT-with-Kraken-as-Exchange">Testing Data using CCXT with Kraken as Exchange<a class="anchor-link" href="#Testing-Data-using-CCXT-with-Kraken-as-Exchange">&#182;</a></h3><p><a href="Data_ML_models_training/CCXT_data_for_testing.ipynb">Jupyter Notebook</a></p>
-
-</div>
-</div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[8]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">currs_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;ETH/AUD&#39;</span><span class="p">,</span> <span class="s1">&#39;XRP/AUD&#39;</span> <span class="p">,</span> <span class="s1">&#39;LTC/AUD&#39;</span><span class="p">,</span> <span class="s1">&#39;ADA/AUD&#39;</span><span class="p">,</span> <span class="s1">&#39;XLM/AUD&#39;</span><span class="p">,</span> <span class="s1">&#39;BCH/AUD&#39;</span><span class="p">]</span>     <span class="c1">#</span>
-
-<span class="n">dict_ohlcv</span> <span class="o">=</span> <span class="p">{}</span>
-
-<span class="k">for</span> <span class="n">curr</span> <span class="ow">in</span> <span class="n">currs_list</span><span class="p">:</span>
-    
-    <span class="c1"># Call data fetch</span>
-    <span class="n">ohlcv</span> <span class="o">=</span> <span class="n">exchange</span><span class="o">.</span><span class="n">fetchOHLCV</span><span class="p">(</span><span class="n">curr</span><span class="p">,</span> <span class="s1">&#39;1h&#39;</span><span class="p">)</span>
-
-    <span class="c1"># Store the values in a dataframe</span>
-    <span class="n">df_ohlcv</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">ohlcv</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">,</span> <span class="s1">&#39;Open&#39;</span><span class="p">,</span> <span class="s1">&#39;High&#39;</span><span class="p">,</span> <span class="s1">&#39;Low&#39;</span><span class="p">,</span> <span class="s1">&#39;Close&#39;</span><span class="p">,</span> <span class="s1">&#39;Volume&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;Date&#39;</span><span class="p">)</span>
-    <span class="n">df_ohlcv</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df_ohlcv</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s1">&#39;ms&#39;</span><span class="p">)</span>
-
-    <span class="n">df_ohlcv</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-    <span class="c1"># Store the symbol name and history data in a dict </span>
-    <span class="n">dict_ohlcv</span><span class="p">[</span><span class="n">curr</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_ohlcv</span> 
-
-    <span class="n">start_date</span> <span class="o">=</span> <span class="n">df_ohlcv</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">date</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
-    <span class="n">end_date</span> <span class="o">=</span> <span class="n">df_ohlcv</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">date</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
-    <span class="n">num_records</span> <span class="o">=</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">df_ohlcv</span><span class="p">))</span>
-    <span class="n">start_price</span> <span class="o">=</span> <span class="n">df_ohlcv</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;Close&#39;</span><span class="p">]</span>
-    <span class="n">end_price</span> <span class="o">=</span> <span class="n">df_ohlcv</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;Close&#39;</span><span class="p">]</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Data summary for </span><span class="si">{</span><span class="n">curr</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;    Start Date: </span><span class="si">{</span><span class="n">start_date</span><span class="si">}</span><span class="s1">; End Date: </span><span class="si">{</span><span class="n">end_date</span><span class="si">}</span><span class="s1">; NUmber of records: </span><span class="si">{</span><span class="n">num_records</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;    Start Price: </span><span class="si">{</span><span class="n">start_price</span><span class="si">}</span><span class="s1">; End Price: </span><span class="si">{</span><span class="n">end_price</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>    
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Data for </span><span class="si">{</span><span class="n">curr</span><span class="si">}</span><span class="s1"> fetched and appended into the dictionary</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>Data summary for ETH/AUD
-    Start Date: 2021-08-06; End Date: 2021-09-05; NUmber of records: 720
-    Start Price: 3796.86; End Price: 5267.66
-Data for ETH/AUD fetched and appended into the dictionary
-
-Data summary for XRP/AUD
-    Start Date: 2021-08-06; End Date: 2021-09-05; NUmber of records: 720
-    Start Price: 0.99639; End Price: 1.69548
-Data for XRP/AUD fetched and appended into the dictionary
-
-Data summary for LTC/AUD
-    Start Date: 2021-08-06; End Date: 2021-09-05; NUmber of records: 720
-    Start Price: 189.52; End Price: 292.43
-Data for LTC/AUD fetched and appended into the dictionary
-
-Data summary for ADA/AUD
-    Start Date: 2021-08-06; End Date: 2021-09-05; NUmber of records: 720
-    Start Price: 1.87313; End Price: 3.87422
-Data for ADA/AUD fetched and appended into the dictionary
-
-Data summary for XLM/AUD
-    Start Date: 2021-08-06; End Date: 2021-09-05; NUmber of records: 720
-    Start Price: 0.37792; End Price: 0.50057
-Data for XLM/AUD fetched and appended into the dictionary
-
-Data summary for BCH/AUD
-    Start Date: 2021-08-06; End Date: 2021-09-05; NUmber of records: 720
-    Start Price: 724.68; End Price: 955.53
-Data for BCH/AUD fetched and appended into the dictionary
-
-</pre>
-</div>
-</div>
-
-</div>
-
-</div>
-
-</div></div></section></section><section><section>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="Step-2---Clean,-Prepare,-Manipulate-Data-and-Feature-Selection">Step 2 - Clean, Prepare, Manipulate Data and Feature Selection<a class="anchor-link" href="#Step-2---Clean,-Prepare,-Manipulate-Data-and-Feature-Selection">&#182;</a></h1>
-</div>
-</div></section><section>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Function-for-calculating-and-adding-Technical-Indicators">Function for calculating and adding Technical Indicators<a class="anchor-link" href="#Function-for-calculating-and-adding-Technical-Indicators">&#182;</a></h2><p>Function .py file - <a href="Data_ML_models_training/CronJobs/Utility_Functions/Functions.py">CronJobs/Utility_Functions/Functions.py</a></p>
-<p>Library - TA-lib</p>
-<p>Indicators Used:</p>
-<ul>
-<li>Momentum Indicators - SMA, RSI, CCI, MACD</li>
-<li>Trend Strength Indicators - ADX</li>
-<li>Volatility Indicators - ATR, Bollinger Bands</li>
-<li>Volume Indicators - SMA(Volume)</li>
-</ul>
-
-</div>
-</div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[9]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">add_tech_indicators</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">fast</span><span class="p">,</span> <span class="n">slow</span><span class="p">):</span>
-    
-<span class="c1">#---------------------------------------------------------------------</span>
-<span class="c1"># Momentum Indicators</span>
-<span class="c1">#---------------------------------------------------------------------</span>
-<span class="c1"># SMA indicators fast and slow</span>
-    <span class="n">sma_fast</span> <span class="o">=</span> <span class="n">ta</span><span class="o">.</span><span class="n">SMA</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Close&#39;</span><span class="p">],</span> <span class="n">timeperiod</span><span class="o">=</span><span class="n">fast</span> <span class="p">)</span>
-    <span class="n">sma_slow</span> <span class="o">=</span> <span class="n">ta</span><span class="o">.</span><span class="n">SMA</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Close&#39;</span><span class="p">],</span> <span class="n">timeperiod</span><span class="o">=</span><span class="n">slow</span> <span class="p">)</span>
-    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;SMA_agg&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sma_fast</span> <span class="o">/</span> <span class="n">sma_slow</span> 
-
-<span class="c1"># RSI Ratio</span>
-    <span class="n">rsi_fast</span> <span class="o">=</span> <span class="n">ta</span><span class="o">.</span><span class="n">RSI</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Close&#39;</span><span class="p">],</span> <span class="n">fast</span><span class="p">)</span>
-    <span class="n">rsi_slow</span> <span class="o">=</span> <span class="n">ta</span><span class="o">.</span><span class="n">RSI</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Close&#39;</span><span class="p">],</span> <span class="n">slow</span><span class="p">)</span>
-    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;RSI_ratio&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">rsi_fast</span> <span class="o">/</span> <span class="n">rsi_slow</span>
-
-<span class="c1"># CCI</span>
-    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;CCI&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ta</span><span class="o">.</span><span class="n">CCI</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;High&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Low&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Close&#39;</span><span class="p">],</span> <span class="n">fast</span><span class="p">)</span>
-
-<span class="c1"># MACD</span>
-<span class="c1"># We&#39;ll be using MACD_ratio which is MACD / Signal. We will multiply it by -1 if MACD is lesser than 0. </span>
-<span class="c1"># So the MACD ratio will range from:</span>
-    <span class="c1"># ratio &lt; -1, when the MACD is below 0 and MACD is below Signal line </span>
-    <span class="c1"># -1 &gt; ratio &gt; 0, when the MACD is above Signal line but below 0</span>
-    <span class="c1"># 0 &lt; ratio &lt; 1, when MACD is below signal but above 0 </span>
-    <span class="c1"># 1 &lt; ratio, when MACD is above 0 and above the signal line </span>
-    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;MACD&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Signal&#39;</span><span class="p">],</span> <span class="n">hist</span> <span class="o">=</span> <span class="n">ta</span><span class="o">.</span><span class="n">MACD</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Close&#39;</span><span class="p">],</span> <span class="n">fastperiod</span><span class="o">=</span><span class="n">fast</span><span class="p">,</span> <span class="n">slowperiod</span><span class="o">=</span><span class="n">slow</span><span class="p">,</span> <span class="n">signalperiod</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span> 
-    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;MACD_ratio&#39;</span><span class="p">]</span> <span class="o">=</span>  <span class="n">df</span><span class="p">[</span><span class="s1">&#39;MACD&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Signal&#39;</span><span class="p">]</span>
-    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;MACD_ratio&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;MACD_ratio&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;MACD&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="nb">abs</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;MACD&#39;</span><span class="p">])</span>          
-
-    <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span> <span class="p">[</span><span class="s1">&#39;MACD&#39;</span><span class="p">,</span> <span class="s1">&#39;Signal&#39;</span><span class="p">],</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
-
-<span class="c1">#---------------------------------------------------------------------</span>
-<span class="c1"># Trend Strength Indicators</span>
-<span class="c1">#---------------------------------------------------------------------</span>
-<span class="c1"># ADX</span>
-    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ADX&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ta</span><span class="o">.</span><span class="n">ADX</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;High&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Low&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Close&#39;</span><span class="p">],</span> <span class="n">timeperiod</span><span class="o">=</span> <span class="n">fast</span><span class="p">)</span>
-    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;plus_DI&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ta</span><span class="o">.</span><span class="n">PLUS_DI</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;High&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Low&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Close&#39;</span><span class="p">],</span> <span class="n">timeperiod</span><span class="o">=</span> <span class="n">fast</span><span class="p">)</span>
-    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;minus_DI&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ta</span><span class="o">.</span><span class="n">MINUS_DI</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;High&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Low&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Close&#39;</span><span class="p">],</span> <span class="n">timeperiod</span><span class="o">=</span> <span class="n">fast</span><span class="p">)</span>
-    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ADX_dirn&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;plus_DI&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;minus_DI&#39;</span><span class="p">],</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
-
-    <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;plus_DI&#39;</span><span class="p">,</span> <span class="s1">&#39;minus_DI&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-<span class="c1">#---------------------------------------------------------------------</span>
-<span class="c1"># Volatility Indicators</span>
-<span class="c1">#---------------------------------------------------------------------</span>
-<span class="c1"># ATR Ratio: fast / slow. if value is less than 1, the price volatility is slowing</span>
-    <span class="n">atr_fast</span> <span class="o">=</span> <span class="n">ta</span><span class="o">.</span><span class="n">ATR</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;High&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Low&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Close&#39;</span><span class="p">],</span> <span class="n">timeperiod</span><span class="o">=</span> <span class="n">fast</span><span class="p">)</span>
-    <span class="n">atr_slow</span> <span class="o">=</span> <span class="n">ta</span><span class="o">.</span><span class="n">ATR</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;High&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Low&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Close&#39;</span><span class="p">],</span> <span class="n">timeperiod</span><span class="o">=</span> <span class="n">slow</span><span class="p">)</span>
-    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ATR_ratio&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">atr_fast</span> <span class="o">/</span> <span class="n">atr_slow</span>
-
-<span class="c1"># Bollinger Bands: periods = fast; Std.Dev = 1</span>
-    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;BBands_high&#39;</span><span class="p">],</span> <span class="n">middle</span><span class="p">,</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;BBands_low&#39;</span><span class="p">]</span>  <span class="o">=</span> <span class="n">ta</span><span class="o">.</span><span class="n">BBANDS</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Close&#39;</span><span class="p">],</span> <span class="n">timeperiod</span><span class="o">=</span> <span class="n">fast</span><span class="p">,</span> <span class="n">nbdevup</span><span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">nbdevdn</span><span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
-
-    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;BBands_high&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;BBands_high&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Close&#39;</span><span class="p">]</span>             <span class="c1"># Value lesser than 1 will mean price has crossed above upper band</span>
-    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;BBands_low&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Close&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;BBands_low&#39;</span><span class="p">]</span>               <span class="c1"># Value lesser than 1 will mean price has crossed below lower band</span>
-
-<span class="c1">#---------------------------------------------------------------------</span>
-<span class="c1"># Volume Indicators</span>
-<span class="c1">#---------------------------------------------------------------------</span>
-<span class="c1"># # SMA indicators fast and slow</span>
-    <span class="n">sma_vol_fast</span> <span class="o">=</span> <span class="n">ta</span><span class="o">.</span><span class="n">SMA</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Volume&#39;</span><span class="p">],</span> <span class="n">timeperiod</span><span class="o">=</span><span class="n">fast</span> <span class="p">)</span>
-    <span class="n">sma_vol_slow</span> <span class="o">=</span> <span class="n">ta</span><span class="o">.</span><span class="n">SMA</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Volume&#39;</span><span class="p">],</span> <span class="n">timeperiod</span><span class="o">=</span><span class="n">slow</span> <span class="p">)</span>
-    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;SMA_vol_agg&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sma_vol_fast</span> <span class="o">/</span> <span class="n">sma_vol_slow</span> 
-
-    <span class="k">return</span> <span class="n">df</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div></div></section><section>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Data-manipulation---Computing-Target-Values">Data manipulation - Computing Target Values<a class="anchor-link" href="#Data-manipulation---Computing-Target-Values">&#182;</a></h2>
-</div>
-</div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df_data</span><span class="p">[</span><span class="s1">&#39;Target_returns&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_data</span><span class="o">.</span><span class="n">Returns</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">df_data</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">df_data</span><span class="p">[</span><span class="s1">&#39;Buy_or_sell&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_data</span><span class="o">.</span><span class="n">Target_returns</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div></div></section><section>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Feature-Selection">Feature Selection<a class="anchor-link" href="#Feature-Selection">&#182;</a></h2><p><a href="Data_ML_models_training/Feature_sel_and_ML_training.ipynb">Jupyter Notebook</a></p>
-<p>Library used sklearn.feature_selection</p>
-<p>Techniques used - SelectKBest(f_classific), VarianceThreshold(threshold of 0.8)</p>
-<p>Process - Ran the SelectKBest method and discarded 3 features which were least relevant</p>
-<h2 id="Resampling">Resampling<a class="anchor-link" href="#Resampling">&#182;</a></h2><p><a href="Data_ML_models_training/Feature_sel_and_ML_training.ipynb">Jupyter Notebook</a></p>
-<p>Library used imblearn.combine</p>
-<p>Technique used - SMOTEENN</p>
-
-</div>
-</div></section></section><section><section>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="Step-3---ML-Model-Selection,-Hypertuning-and-Training">Step 3 - ML Model Selection, Hypertuning and Training<a class="anchor-link" href="#Step-3---ML-Model-Selection,-Hypertuning-and-Training">&#182;</a></h1>
-</div>
-</div></section><section>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><a href="Data_ML_models_training/Feature_sel_and_ML_training.ipynb">Jupyter Notebook</a></p>
-<p>Libraries used - sklearn.model_selection, sklearn.preprocessing, sklearn.compose, sklearn.decomposition, sklearn.pipeline</p>
-<p>Models used for evaluation</p>
-<ul>
-<li>SVC</li>
-<li>Logistic Regression</li>
-<li>Decision Tree Classifier</li>
-<li>Random Forest Classifier</li>
-<li>Gradient Boosting Classifier</li>
-<li>Ada Boost</li>
-</ul>
-<p>Steps in Pipeline</p>
-<ul>
-<li>StandardScaler</li>
-<li>Model</li>
-</ul>
-<p>Steps in Model Selection</p>
-<ul>
-<li>sklearn.model_selection -&gt; cross_val_score using 'roc_auc' and 'accuracy'</li>
-<li>sklearn.model_selection -&gt; GridSearchCV using 'roc_auc'</li>
-</ul>
+<h2 id="Evaluate-the-performance-of-each-model">Evaluate the performance of each model<a class="anchor-link" href="#Evaluate-the-performance-of-each-model">&#182;</a></h2><p>The models were compiled and then trained with multiple combinations of parameters. Finally, the optimal results were obtained with the following parameters (for both models):</p>
+<p>•   Number of units: 24</p>
+<p>•   Epochs: 20</p>
+<p>•   Batch size: 1</p>
+<p>•   Optimizer: adam</p>
+<p>•   Loss: mean_squared_error (since the value we want to predict is continuous)</p>
+<p>•   Dropout layer: 0.2 (to prevent overfitting)</p>
+<p>•   Shuffle: false (to keep the sequential order of the data since we are working with time-series)</p>
+<p>The predicted prices were then compared with the actual test results and were plotted in a line chart.</p>
 
 </div>
 </div></section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Pre-processing-steps">Pre-processing steps<a class="anchor-link" href="#Pre-processing-steps">&#182;</a></h2><ol>
-<li><p>Column Transformation using <code>make_column_transformer</code> method of sklearn.compose</p>
-</li>
-<li><p>Column Transformer to run StandardScaler on the 8 best indicators determined in Feature Selection</p>
-</li>
-<li><p>Defined pipeline with column transformation as first step</p>
-</li>
-</ol>
-
-</div>
-</div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Column Transformer with the 8 best indicators selected from Feature Selection step</span>
-<span class="n">col_transform</span> <span class="o">=</span> <span class="n">make_column_transformer</span><span class="p">(</span>
-    <span class="p">(</span><span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">best_inds</span> <span class="p">),</span>
-    <span class="n">remainder</span><span class="o">=</span><span class="s1">&#39;drop&#39;</span>
-<span class="p">)</span>
-<span class="n">col_transform</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">);</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div></div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Defining pipeline with the columntransformer and model selected for training</span>
-<span class="k">if</span> <span class="n">model_for_testing</span> <span class="o">==</span> <span class="s1">&#39;svc&#39;</span><span class="p">:</span> <span class="n">model</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;svc&#39;</span><span class="p">,</span> <span class="n">SVC</span><span class="p">()</span> <span class="p">)</span>
-<span class="k">elif</span> <span class="n">model_for_testing</span> <span class="o">==</span> <span class="s1">&#39;logreg&#39;</span><span class="p">:</span> <span class="n">model</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;logreg&#39;</span><span class="p">,</span> <span class="n">LogisticRegression</span><span class="p">(</span> <span class="p">))</span>
-<span class="k">elif</span> <span class="n">model_for_testing</span> <span class="o">==</span> <span class="s1">&#39;dec_tree&#39;</span><span class="p">:</span> <span class="n">model</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;dec_tree&#39;</span><span class="p">,</span> <span class="n">DecisionTreeClassifier</span><span class="p">())</span>
-<span class="k">elif</span> <span class="n">model_for_testing</span> <span class="o">==</span> <span class="s1">&#39;forest&#39;</span><span class="p">:</span> <span class="n">model</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;forest&#39;</span><span class="p">,</span> <span class="n">RandomForestClassifier</span><span class="p">(</span> <span class="p">))</span>
-<span class="k">elif</span> <span class="n">model_for_testing</span> <span class="o">==</span> <span class="s1">&#39;grad_boost&#39;</span><span class="p">:</span> <span class="n">model</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;grad_boost&#39;</span><span class="p">,</span> <span class="n">GradientBoostingClassifier</span><span class="p">())</span>
-<span class="k">elif</span> <span class="n">model_for_testing</span> <span class="o">==</span> <span class="s1">&#39;ada_boost&#39;</span><span class="p">:</span> <span class="n">model</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;ada_boost&#39;</span><span class="p">,</span> <span class="n">AdaBoostClassifier</span><span class="p">())</span>
-
-<span class="n">pipe</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">steps</span><span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;col_transform&#39;</span><span class="p">,</span> <span class="n">col_transform</span><span class="p">),</span> 
-                    <span class="c1"># (&#39;pca&#39;, pca),</span>
-                    <span class="n">model</span>
-                    <span class="p">])</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div></div></section><section>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Model-Selection">Model Selection<a class="anchor-link" href="#Model-Selection">&#182;</a></h2><p>Steps involved:</p>
-<ol>
-<li><p>Ran <code>cross_val_score</code> with on the models with default parameters and 10-fold Cross Validation to get the benchmark scores</p>
-</li>
-<li><p>Ran GridSearchCV on a range of parameters to get the optimal model configuration</p>
-</li>
-</ol>
-
-</div>
-</div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># cross-validate the entire process</span>
-<span class="c1"># thus, preprocessing occurs within each fold of cross-validation</span>
-<span class="n">cross_val_roc_auc</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">pipe</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s1">&#39;roc_auc&#39;</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-
-<span class="n">cross_val_accuracy</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">pipe</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s1">&#39;accuracy&#39;</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div></div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">grid</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">pipe</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s1">&#39;roc_auc&#39;</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
-<span class="n">grid</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">);</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Score: </span><span class="si">{</span><span class="n">grid</span><span class="o">.</span><span class="n">best_score_</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Best params: </span><span class="si">{</span><span class="n">grid</span><span class="o">.</span><span class="n">best_params_</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-<span class="n">estimator</span> <span class="o">=</span> <span class="n">grid</span><span class="o">.</span><span class="n">best_estimator_</span><span class="p">[</span><span class="n">model_for_testing</span><span class="p">]</span>
-
-<span class="n">grid_best_params</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">grid</span><span class="o">.</span><span class="n">best_params_</span><span class="p">)</span>
-<span class="n">grid_best_params</span>
-<span class="n">gridcv_best_score</span> <span class="o">=</span> <span class="n">grid</span><span class="o">.</span><span class="n">best_score_</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div></div></section><section>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Fitting-the-pipeline-with-the-tuned-model-and-saving-it-to-a-joblib">Fitting the pipeline with the tuned model and saving it to a joblib<a class="anchor-link" href="#Fitting-the-pipeline-with-the-tuned-model-and-saving-it-to-a-joblib">&#182;</a></h2>
-</div>
-</div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Fitting the pipeline, with the tuned model</span>
-<span class="n">pipeline</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">col_transform</span><span class="p">,</span> 
-            <span class="c1"># pca, </span>
-            <span class="n">estimator</span><span class="p">)</span>
-<span class="n">pipeline</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div></div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">joblib</span> <span class="kn">import</span> <span class="n">dump</span><span class="p">,</span> <span class="n">load</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-
-<span class="n">filename</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;Joblibs/&#39;</span> <span class="o">+</span> <span class="n">dt</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="n">model_for_testing</span> <span class="o">+</span> <span class="s1">&#39;_Feat_sel.joblib&#39;</span><span class="p">)</span>
-<span class="n">dump</span><span class="p">(</span><span class="n">pipeline</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div></div></section></section><section><section>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="Step-4---Testing">Step 4 - Testing<a class="anchor-link" href="#Step-4---Testing">&#182;</a></h1>
-</div>
-</div></section><section>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><a href="Data_ML_models_training/Backtest_Mach_learn.ipynb">Jupyter Notebook</a></p>
-<h2 id="Set-Control-parameters-for-the-backtest-and-run-the-predictions">Set Control parameters for the backtest and run the predictions<a class="anchor-link" href="#Set-Control-parameters-for-the-backtest-and-run-the-predictions">&#182;</a></h2>
-</div>
-</div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">model_for_testing</span> <span class="o">=</span> <span class="s1">&#39;2021-09-01_ada_boost_Feat_sel.joblib&#39;</span>
-
-<span class="n">curr_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;BTC/AUD&#39;</span><span class="p">,</span> <span class="s1">&#39;ETH/AUD&#39;</span><span class="p">,</span> <span class="s1">&#39;XRP/AUD&#39;</span><span class="p">,</span> <span class="s1">&#39;LTC/AUD&#39;</span><span class="p">,</span> <span class="s1">&#39;ADA/AUD&#39;</span><span class="p">,</span> <span class="s1">&#39;XLM/AUD&#39;</span><span class="p">,</span> <span class="s1">&#39;BCH/AUD&#39;</span><span class="p">]</span>
-
-<span class="n">all_inds</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;SMA_agg&#39;</span><span class="p">,</span> <span class="s1">&#39;RSI_ratio&#39;</span><span class="p">,</span> <span class="s1">&#39;CCI&#39;</span><span class="p">,</span> <span class="s1">&#39;MACD_ratio&#39;</span><span class="p">,</span> <span class="s1">&#39;ADX&#39;</span><span class="p">,</span> <span class="s1">&#39;ADX_dirn&#39;</span><span class="p">,</span> <span class="s1">&#39;ATR_ratio&#39;</span><span class="p">,</span> <span class="s1">&#39;BBands_high&#39;</span><span class="p">,</span> <span class="s1">&#39;BBands_low&#39;</span><span class="p">,</span> <span class="s1">&#39;SMA_vol_agg&#39;</span><span class="p">,</span> <span class="s1">&#39;Returns&#39;</span><span class="p">]</span>
-
-<span class="n">df_cml_rets</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
-<span class="n">df_hourly_rets</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
-
-<span class="k">for</span> <span class="n">curr_tested</span> <span class="ow">in</span> <span class="n">curr_list</span><span class="p">:</span>
-
-    <span class="n">df_testing_subset</span> <span class="o">=</span> <span class="n">df_all_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span> <span class="n">df_all_data</span><span class="o">.</span><span class="n">Currency</span> <span class="o">==</span> <span class="n">curr_tested</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="n">df_testing_subset</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-    <span class="n">X_test</span> <span class="o">=</span> <span class="n">df_testing_subset</span><span class="o">.</span><span class="n">loc</span><span class="p">[:</span> <span class="p">,</span> <span class="n">all_inds</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>   
-    <span class="n">y_test</span> <span class="o">=</span> <span class="n">df_testing_subset</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="p">[</span><span class="s1">&#39;Target_returns&#39;</span><span class="p">,</span> <span class="s1">&#39;Buy_or_sell&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-
-    <span class="c1"># Run the predictions</span>
-    <span class="n">df_pred</span> <span class="o">=</span> <span class="n">y_test</span>
-    <span class="n">df_pred</span><span class="p">[</span><span class="s1">&#39;Pred_buy_or_sell&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Classification report for </span><span class="si">{</span><span class="n">curr_tested</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="o">.</span><span class="n">Buy_or_sell</span><span class="p">,</span> <span class="n">df_pred</span><span class="o">.</span><span class="n">Pred_buy_or_sell</span><span class="p">))</span>
-
-    <span class="n">hourly_returns</span> <span class="o">=</span> <span class="n">df_pred</span><span class="p">[</span><span class="s1">&#39;Target_returns&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">df_pred</span><span class="p">[</span><span class="s1">&#39;Pred_buy_or_sell&#39;</span><span class="p">]</span>
-    <span class="n">cum_rets</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">hourly_returns</span><span class="p">)</span><span class="o">.</span><span class="n">cumprod</span><span class="p">()</span>
-    <span class="n">total_returns</span> <span class="o">=</span> <span class="nb">round</span><span class="p">((</span><span class="n">cum_rets</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">cum_rets</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-
-    <span class="n">col_name</span> <span class="o">=</span> <span class="s1">&#39;hourly_rets_&#39;</span>  <span class="o">+</span> <span class="p">(</span><span class="n">curr_tested</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">))</span>
-    <span class="n">df_hourly_rets</span><span class="p">[</span><span class="n">col_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">hourly_returns</span>
-
-    <span class="n">col_name</span> <span class="o">=</span> <span class="s1">&#39;cum_rets_&#39;</span> <span class="o">+</span> <span class="p">(</span><span class="n">curr_tested</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">))</span>
-    <span class="n">df_cml_rets</span><span class="p">[</span><span class="n">col_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">cum_rets</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div></div></section><section>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Evaluate-Performance-Metrics">Evaluate Performance Metrics<a class="anchor-link" href="#Evaluate-Performance-Metrics">&#182;</a></h2>
-</div>
-</div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">metrics</span> <span class="o">=</span> <span class="p">[</span> <span class="s1">&#39;Annual Return&#39;</span><span class="p">,</span> <span class="s1">&#39;Cumulative Returns&#39;</span><span class="p">,</span> <span class="s1">&#39;Annual Volatility&#39;</span><span class="p">,</span> <span class="s1">&#39;Sharpe Ratio&#39;</span><span class="p">,</span> <span class="s1">&#39;Sortino Ratio&#39;</span><span class="p">]</span>
-
-<span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Backtest&#39;</span><span class="p">]</span>
-
-<span class="c1"># Initialize the DataFrame with index set to evaluation metrics and column as `Backtest` (just like PyFolio)</span>
-<span class="n">portfolio_evaluation_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">metrics</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">columns</span><span class="p">)</span>
-
-<span class="c1"># Calculate cumulative return</span>
-<span class="n">portfolio_evaluation_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;Cumulative Returns&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_portfolio_returns</span><span class="p">[</span><span class="s1">&#39;cum_rets_agg&#39;</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-
-<span class="c1"># Calculate annualized return</span>
-<span class="n">portfolio_evaluation_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;Annual Return&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span> <span class="n">df_portfolio_returns</span><span class="p">[</span><span class="s1">&#39;hourly_rets_agg&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">*</span> <span class="mi">24</span> <span class="o">*</span> <span class="mi">365</span> <span class="p">)</span>
-
-<span class="c1"># Calculate annual volatility</span>
-<span class="n">portfolio_evaluation_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;Annual Volatility&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span> <span class="n">df_portfolio_returns</span><span class="p">[</span><span class="s1">&#39;hourly_rets_agg&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">24</span> <span class="o">*</span> <span class="mi">365</span><span class="p">)</span> <span class="p">)</span>
-
-<span class="c1"># Calculate Sharpe Ratio</span>
-<span class="n">portfolio_evaluation_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;Sharpe Ratio&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span> <span class="n">df_portfolio_returns</span><span class="p">[</span><span class="s1">&#39;hourly_rets_agg&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">*</span> <span class="mi">24</span> <span class="o">*</span> <span class="mi">365</span><span class="p">)</span> <span class="o">/</span> 
-    <span class="p">(</span> <span class="n">df_portfolio_returns</span><span class="p">[</span><span class="s1">&#39;hourly_rets_agg&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">24</span> <span class="o">*</span> <span class="mi">365</span><span class="p">)</span> <span class="p">)</span>
-
-<span class="c1"># Calculate Downside Return</span>
-<span class="n">sortino_ratio_df</span> <span class="o">=</span> <span class="n">df_portfolio_returns</span><span class="p">[[</span><span class="s1">&#39;hourly_rets_agg&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-<span class="n">sortino_ratio_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;Downside Returns&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-
-<span class="n">target</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="n">mask</span> <span class="o">=</span> <span class="n">sortino_ratio_df</span><span class="p">[</span><span class="s1">&#39;hourly_rets_agg&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">target</span>
-<span class="n">sortino_ratio_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">mask</span><span class="p">,</span> <span class="s1">&#39;Downside Returns&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sortino_ratio_df</span><span class="p">[</span><span class="s1">&#39;hourly_rets_agg&#39;</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span>
-
-<span class="c1"># Calculate Sortino Ratio</span>
-<span class="n">down_stdev</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sortino_ratio_df</span><span class="p">[</span><span class="s1">&#39;Downside Returns&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">24</span> <span class="o">*</span> <span class="mi">365</span><span class="p">)</span>
-<span class="n">expected_return</span> <span class="o">=</span> <span class="n">sortino_ratio_df</span><span class="p">[</span><span class="s1">&#39;hourly_rets_agg&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">*</span> <span class="mi">24</span> <span class="o">*</span> <span class="mi">365</span>
-<span class="n">sortino_ratio</span> <span class="o">=</span> <span class="n">expected_return</span><span class="o">/</span><span class="n">down_stdev</span>
-
-<span class="n">portfolio_evaluation_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;Sortino Ratio&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sortino_ratio</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div></div></section><section>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Backtest-Results">Backtest Results<a class="anchor-link" href="#Backtest-Results">&#182;</a></h2><p>Strategy Performance on individual currency pairs</p>
-<table>
-<thead><tr>
-<th><img src="Data_ML_models_training/Backtest_results/Results_BTC-AUD.png" alt="BTC-AUD"></th>
-<th><img src="Data_ML_models_training/Backtest_results/Results_ETH-AUD.png" alt="ETH-AUD"></th>
-<th><img src="Data_ML_models_training/Backtest_results/Results_BCH-AUD.png" alt="BCH-AUD"></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><img src="Data_ML_models_training/Backtest_results/Results_ADA-AUD.png" alt="ADA-AUD"></td>
-<td><img src="Data_ML_models_training/Backtest_results/Results_XRP-AUD.png" alt="XRP-AUD"></td>
-<td><img src="Data_ML_models_training/Backtest_results/Results_XLM-AUD.png" alt="XLM-AUD"></td>
-</tr>
-<tr>
-<td><img src="Data_ML_models_training/Backtest_results/Results_LTC-AUD.png" alt="LTC-AUD"></td>
-<td></td>
-</tr>
-</tbody>
-</table>
+<h2 id="Charts-using-the-Closing-prices-LSTM-model-for-the-Cryptos-were-as-below:">Charts using the Closing prices LSTM model for the Cryptos were as below:<a class="anchor-link" href="#Charts-using-the-Closing-prices-LSTM-model-for-the-Cryptos-were-as-below:">&#182;</a></h2><p><img src="Data_ML_models_training/Images/LSTM_closing_prices_chart.png" alt="Chart - LSTM Closing Prices model"></p>
 
 </div>
 </div></section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Strategy Performance for the portfolio of the 7 currency pairs</p>
-<p>Cumulative Returns</p>
-<blockquote><p><img src="Data_ML_models_training/Backtest_results/Portfolio_Results-2021-08-04_to_2021-09-03.png" alt="Portfolio Returns"></p>
-</blockquote>
-<p>Metrics</p>
-<blockquote><p><img src="Data_ML_models_training/Backtest_results/Portfolio_metrics.png" alt="Portfolio metrics"></p>
-</blockquote>
+<h2 id="Charts-using-the-Returns-LSTM-model-for-the-Cryptos-were-as-below:">Charts using the Returns LSTM model for the Cryptos were as below:<a class="anchor-link" href="#Charts-using-the-Returns-LSTM-model-for-the-Cryptos-were-as-below:">&#182;</a></h2><p><img src="Data_ML_models_training/Images/LSTM_returns_chart.png" alt="Chart - LSTM Returns model"></p>
+
+</div>
+</div></section><section>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="Conclusion">Conclusion<a class="anchor-link" href="#Conclusion">&#182;</a></h2><p>Using the above analysis, the following questions were answered:</p>
+<p>Q. Which model has a lower loss?</p>
+<p>A. The LSTM model using Returns had a lower loss value on average.</p>
+<p>Q. Which model tracks the actual values better over time?</p>
+<p>A. The LSTM model which used the Returns tracked the actual values better over time</p>
+<p>Q. Which window size works best for the model?</p>
+<p>A. After trying different values, 24 hour rolling window was appropriate.</p>
+<h2 id="What-would-you-reasearch-next,-if-you-had-two-more-weeks?">What would you reasearch next, if you had two more weeks?<a class="anchor-link" href="#What-would-you-reasearch-next,-if-you-had-two-more-weeks?">&#182;</a></h2><p>There is always space for improvement, the fuel of an RNN model is data so we can build a more robust and accurate model by collecting more data.</p>
+<p>We can also try to adjust the number of nodes in a layer or add additional LSTM layers, we could also experiment with the batch size parameter; however a smaller batch size is always recommended.</p>
 
 </div>
 </div></section></section>
