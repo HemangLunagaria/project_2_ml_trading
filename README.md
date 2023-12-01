@@ -10,9 +10,6 @@ Using Amazon Lex, the bot will then be instructed to either execute a Buy or Sel
 
 ![image](https://github.com/HemangLunagaria/project_2_ml_trading/blob/main/images/mindmap.png)
 
-## Data Analysis
-Blablablabala
-
 ## Models Used
 * Decision Tree
 * Random Forrest
